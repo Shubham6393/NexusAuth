@@ -6,6 +6,8 @@ const dotenv = require('dotenv');
 // Load environment variables
 dotenv.config();
 
+console.log("ENV CHECK:", process.env.MONGO_URI);
+
 // Route files
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -39,7 +41,7 @@ const connectDB = async () => {
       await mongoose.connect(mongoURI);
       console.log('MongoDB Connected...');
     }
-    
+
     app.listen(PORT, () => {
       console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
     });

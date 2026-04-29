@@ -36,6 +36,7 @@ const signup = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      lastLogin: Date.now(),
     });
 
     if (user) {
@@ -64,10 +65,14 @@ const login = async (req, res) => {
     const user = await User.findOne({ email }).select('+password');
 
     if (user && (await bcrypt.compare(password, user.password))) {
+      user.lastLogin = Date.now();
+      await user.save();
+      
       res.json({
         _id: user.id,
         name: user.name,
         email: user.email,
+        lastLogin: user.lastLogin,
         token: generateToken(user._id),
       });
     } else {

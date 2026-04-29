@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { User, Mail, Calendar, Edit3, Save, X } from 'lucide-react';
+import { User, Mail, Calendar, Edit3, Save, X, Trash2, Clock, AlertTriangle } from 'lucide-react';
 
 const Dashboard = () => {
-  const { user, updateProfile } = useContext(AuthContext);
+  const { user, updateProfile, deleteAccount } = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
@@ -43,8 +43,12 @@ const Dashboard = () => {
         {/* Header Section */}
         <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col md:flex-row items-center md:items-start justify-between gap-6 transition-colors duration-200">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-6 text-center md:text-left">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-4xl font-bold shadow-lg shadow-indigo-500/30">
-              {user.name.charAt(0).toUpperCase()}
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-4xl font-bold shadow-lg shadow-indigo-500/30 overflow-hidden">
+              <img 
+                src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6366f1&color=fff&size=128&bold=true`} 
+                alt={`${user.name}'s avatar`}
+                className="w-full h-full object-cover"
+              />
             </div>
             <div className="mt-2">
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{user.name}</h1>
@@ -192,6 +196,43 @@ const Dashboard = () => {
                     <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Member Since</h3>
                   </div>
                   <p className="text-lg font-medium text-gray-900 dark:text-white">{formatDate(user.createdAt)}</p>
+                </div>
+                
+                <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-2xl md:col-span-2">
+                  <div className="flex items-center mb-4">
+                    <Clock className="w-5 h-5 text-indigo-500 mr-3" />
+                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Last Login</h3>
+                  </div>
+                  <p className="text-lg font-medium text-gray-900 dark:text-white">
+                    {user.lastLogin ? new Date(user.lastLogin).toLocaleString() : 'First time login'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Danger Zone */}
+              <div className="mt-12 pt-8 border-t border-red-100 dark:border-red-900/30">
+                <h2 className="text-xl font-bold text-red-600 dark:text-red-400 mb-6 flex items-center">
+                  <AlertTriangle className="w-5 h-5 mr-2" />
+                  Danger Zone
+                </h2>
+                <div className="bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/50 rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                  <div>
+                    <h3 className="text-lg font-medium text-red-800 dark:text-red-300">Delete Account</h3>
+                    <p className="text-sm text-red-600 dark:text-red-400 mt-1 max-w-md">
+                      Once you delete your account, there is no going back. Please be certain. All your data will be permanently removed.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      if (window.confirm('Are you absolutely sure you want to delete your account? This action cannot be undone.')) {
+                        deleteAccount();
+                      }
+                    }}
+                    className="flex-shrink-0 flex items-center justify-center px-6 py-3 border border-red-200 dark:border-red-800 rounded-xl shadow-sm text-sm font-medium text-red-600 dark:text-red-400 bg-white dark:bg-gray-900 hover:bg-red-50 dark:hover:bg-red-900/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200"
+                  >
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Delete Account
+                  </button>
                 </div>
               </div>
             </div>

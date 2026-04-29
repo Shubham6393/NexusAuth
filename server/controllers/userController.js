@@ -14,6 +14,7 @@ const getProfile = async (req, res) => {
       name: user.name,
       email: user.email,
       createdAt: user.createdAt,
+      lastLogin: user.lastLogin,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -52,7 +53,26 @@ const updateProfile = async (req, res) => {
   }
 };
 
+// @desc    Delete user profile
+// @route   DELETE /api/user/profile
+// @access  Private
+const deleteProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    await user.deleteOne();
+    res.json({ message: 'User removed' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getProfile,
   updateProfile,
+  deleteProfile,
 };

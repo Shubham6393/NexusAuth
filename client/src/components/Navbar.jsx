@@ -35,9 +35,9 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mr-2 shadow-lg shadow-indigo-500/30">
-                <span className="text-white font-bold text-xl leading-none">M</span>
+                <span className="text-white font-bold text-xl leading-none">N</span>
               </div>
-              <span className="font-bold text-xl tracking-tight text-gray-900 dark:text-white">MERNApp</span>
+              <span className="font-bold text-xl tracking-tight text-gray-900 dark:text-white">NexusAuth</span>
             </Link>
           </div>
 

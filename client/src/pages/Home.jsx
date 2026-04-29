@@ -16,11 +16,11 @@ const Home = () => {
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6">
             Build Faster with <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-              The MERN Stack
+              NexusAuth
             </span>
           </h1>
           <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-300 mb-10">
-            A production-ready full-stack boilerplate featuring React, Node.js, Express, MongoDB, and Tailwind CSS. Start building your next big idea today.
+            A production-ready identity management boilerplate featuring React, Node.js, Express, MongoDB, and Tailwind CSS. Start building your next big idea today.
           </p>
           
           <div className="flex flex-col sm:flex-row justify-center gap-4">

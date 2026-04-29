@@ -70,8 +70,21 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const deleteAccount = async () => {
+    try {
+      await api.delete('/user/profile');
+      localStorage.removeItem('token');
+      setUser(null);
+      toast.success('Account deleted successfully.');
+      return true;
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to delete account');
+      return false;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout, updateProfile }}>
+    <AuthContext.Provider value={{ user, loading, login, signup, logout, updateProfile, deleteAccount }}>
       {children}
     </AuthContext.Provider>
   );
